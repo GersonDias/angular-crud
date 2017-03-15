@@ -1,9 +1,9 @@
 export class User {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    country: string;
-    birthDate: Date;
-    selected: Boolean;
+    Id: number;
+    FirstName: string;
+    LastName: string;
+    Email: string;
+    Country: string;
+    BirthDate: Date;
+    Selected: Boolean;
 }

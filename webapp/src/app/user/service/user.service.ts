@@ -21,10 +21,17 @@ export class UserService {
         this.logger.Log(`Fetching users at ${this.usersUrl}`);
         return this.http.get(this.usersUrl)
             .map(response => response.json().data as User[])
-            .do((users) => this.logger.Log(`Fetched ${users}`))
             .catch((error: any) => {
                 this.logger.Log(`An error occured: ${error}`);
                 return Observable.throw('Something bad happened, see the console.');
+            });
+    }
+
+    deleteUsers(selectedUsersId: number[]) {
+        return this.http.delete(`${this.usersUrl}?ids=${selectedUsersId.join('&ids=')}`)
+            .catch((error: any) => {
+                this.logger.Log(`An error occured: ${error}`);
+                return Observable.throw('Something bad happened when you trying to delete users');
             });
     }
 }

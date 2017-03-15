@@ -14,7 +14,7 @@ import { User } from '../model/user.model';
 export class UserTableComponent implements OnInit {
     users: User[];
     selectedUsers: User[];
-    numberSelectedUsers: number;
+    numberSelectedUsers: number = 0;
 
     constructor(private userService: UserService, private logger: LoggerService) {
         this.selectedUsers = [];
@@ -34,6 +34,18 @@ export class UserTableComponent implements OnInit {
         });
     }
 
+    deleteUsers() {
+        if (this.selectedUsers) {
+            this.userService.deleteUsers(this.selectedUsers.map(x => x.Id)).subscribe(() => {
+                this.getUsers();
+                this.selectedUsers = [];
+                this.numberSelectedUsers = 0;
+            }, (errorMSg: string) => {
+                alert(errorMSg);
+            });
+        }
+    }
+
     userSelectedEvent($event: any) {
         this.logger.Log(`${$event.user} - ${$event.selected}`);
 
@@ -43,9 +55,5 @@ export class UserTableComponent implements OnInit {
             this.selectedUsers.splice(this.selectedUsers.findIndex(x => x.id === $event.user.id), 1);
         }
         this.numberSelectedUsers = this.selectedUsers.length;
-    }
-
-    testEvent(n: number) {
-        alert(n);
     }
 }
