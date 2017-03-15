@@ -1,0 +1,9 @@
+.sample-header .navbar-brand {
+  padding: 10px;
+  padding-left: 15px;
+}
+
+.sample-header .logo {
+  height: 100%;
+  vertical-align: top;
+}
