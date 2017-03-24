@@ -49,11 +49,19 @@ export class UserTableComponent implements OnInit {
     userSelectedEvent($event: any) {
         this.logger.Log(`${$event.user} - ${$event.selected}`);
 
-        if ($event.user.selected) {
+        if ($event.user.Selected) {
             this.selectedUsers.push($event.user);
         } else {
-            this.selectedUsers.splice(this.selectedUsers.findIndex(x => x.id === $event.user.id), 1);
+            this.selectedUsers.splice(this.selectedUsers.findIndex(x => x.Id === $event.user.Id), 1);
         }
         this.numberSelectedUsers = this.selectedUsers.length;
+    }
+
+    userSavedEvent() {
+        this.getUsers();
+    }
+
+    userDeletedEvent() {
+        this.getUsers();
     }
 }

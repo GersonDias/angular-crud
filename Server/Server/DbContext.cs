@@ -19,6 +19,6 @@ namespace Server
         {
         }
 
-        public System.Data.Entity.DbSet<Server.Models.Users> Users { get; set; }
+        public System.Data.Entity.DbSet<Server.Models.User> Users { get; set; }
     }
 }

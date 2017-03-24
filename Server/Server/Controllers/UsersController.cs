@@ -23,11 +23,6 @@ namespace Server.Controllers
         {
             var users = new UsersReturn
             {
-                //data = new List<Users>()
-                //{
-                //    new Users() {FirstName = "Gerson", LastName = "Dias", Country = "Brasil", BirthDate = new DateTime(1986,8,31).ToShortDateString(), Email = "contato@gersondias.net"},
-                //    new Users() {FirstName = "Thamyra", LastName = "Miranda", Country = "Brasil", BirthDate = new DateTime(1990,1,13).ToShortDateString(), Email = "contato@gersondias.net"}
-                //}
                 data = db.Users.ToList()
             };
 
@@ -42,11 +37,33 @@ namespace Server.Controllers
 
             return ResponseMessage(new System.Net.Http.HttpResponseMessage(HttpStatusCode.OK));
         }
+
+        public ResponseMessageResult Post([FromBody] User user)
+        {
+            try
+            {
+                var userToModify = db.Users.Find(user.Id);
+
+                userToModify.FirstName = user.FirstName;
+                userToModify.LastName = user.LastName;
+                userToModify.Email = user.Email;
+                userToModify.Country = user.Country;
+                userToModify.BirthDate = user.BirthDate;
+
+                db.SaveChanges();
+
+                return ResponseMessage(new HttpResponseMessage(HttpStatusCode.OK));
+            }
+            catch (Exception err)
+            {
+                return ResponseMessage(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(err.Message) });
+            }
+        }
     }
 
     public class UsersReturn
     {
-        public List<Users> data { get; set; }
+        public List<User> data { get; set; }
     }
 }
 

@@ -1,5 +1,5 @@
 <td>
-  <input type="checkbox" (change)="userSelected(user)" [(ngModel)]="user.selected" />
+  <input type="checkbox" (change)="userSelected(user)" [(ngModel)]="user.Selected" />
 </td>
 <td>{{user.Id}}</td>
 <td>{{user.FirstName}}</td>
@@ -8,7 +8,7 @@
 <td>{{user.Country}}</td>
 <td>{{user.BirthDate}}</td>
 <td>
-  <button class="btn btn-xs btn-default" ng-click="$ctrl.show($ctrl.user)"><span class="glyphicon glyphicon-user"></span> Show</button>  |
-  <button class="btn btn-xs btn-warning" ng-click="$ctrl.edit($ctrl.user)"><span class="glyphicon glyphicon-pencil"></span> Edit</button>  |
-  <button class="btn btn-xs btn-danger" ng-click="$ctrl.delete($ctrl.user)"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+  <button class="btn btn-xs btn-default" (click)="showClicked(user)" data-toggle="modal" data-target="#userDetailsModal"><span class="glyphicon glyphicon-user"></span> Show</button>  |
+  <button class="btn btn-xs btn-warning" (click)="editClicked(user)" data-toggle="modal" data-target="#userDetailsModal"><span class="glyphicon glyphicon-pencil"></span> Edit</button>  |
+  <button class="btn btn-xs btn-danger" (click)="deleteClicked(user)"><span class="glyphicon glyphicon-remove"></span> Delete</button>
 </td>

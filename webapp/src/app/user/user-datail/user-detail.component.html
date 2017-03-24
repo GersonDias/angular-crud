@@ -1,0 +1,47 @@
+<div class="modal fade" role="dialog" id="userDetailsModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">User Details</h4>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="userForm" class="form-horizontal" novalidate>
+          <fieldset>
+            <div class="form-group">
+              <label for="firstName" class="col-md-3 control-group">First Name: </label>
+              <div class="md-col-9">
+                <input type="text" name="firstName" id="firstName" placeholder="Insert your first name" formControlName="firstName" *ngIf="isEdit" />
+                <p *ngIf="!isEdit">{{user.FirstName}}</p>
+              </div>
+              <label for="lastName" class="col-md-3 control-group">Last Name: </label>
+              <div class="md-col-9">
+                <input type="text" name="lastName" id="lastName" placeholder="Insert your last name" formControlName="lastName" *ngIf="isEdit" />
+                <p *ngIf="!isEdit">{{user.LastName}}</p>
+              </div>
+              <label for="email" class="col-md-3 control-group">Email: </label>
+              <div class="md-col-9">
+                <input type="email" name="email" id="email" placeholder="Insert your email" formControlName="email" *ngIf="isEdit"/>
+                <p *ngIf="!isEdit">{{user.Email}}</p>
+              </div>
+              <label for="country" class="col-md-3 control-group">Country: </label>
+              <div class="md-col-9">
+                <input type="text" name="country" id="country" placeholder="Insert your country" formControlName="country" *ngIf="isEdit"/>
+                <p *ngIf="!isEdit">{{user.Country}}</p>                
+              </div>
+              <label for="birthDate" class="col-md-3 control-group">Birth Date: </label>
+              <div class="md-col-9">
+                <input type="text" name="birthDate" id="birthDate" placeholder="Insert your birth date" formControlName="birthDate" [value] *ngIf="isEdit" />
+                <p *ngIf="!isEdit">{{user.BirthDate}}</p>                
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-save" (click)="saveUser(user)" *ngIf="isEdit" data-dismiss="modal"><span class="glyphicon glyphicon-save"></span>Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

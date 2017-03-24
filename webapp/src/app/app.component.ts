@@ -7,4 +7,4 @@ import { Component } from '@angular/core';
   <user-table></user-table>
   <footer-component></footer-component>`,
 })
-export class AppComponent  { name = 'Angular'; }
+export class AppComponent { name = 'Angular'; }

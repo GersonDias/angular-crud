@@ -34,4 +34,14 @@ export class UserService {
                 return Observable.throw('Something bad happened when you trying to delete users');
             });
     }
+
+    saveUser(user: User) {
+        this.logger.Log('Calling http post to save the user ' + user.Id);
+
+        return this.http.post(this.usersUrl, user)
+            .catch((error: any) => {
+                this.logger.Log(`An error occured: ${error}`);
+                return Observable.throw('Something bad happened');
+            });
+    }
 }

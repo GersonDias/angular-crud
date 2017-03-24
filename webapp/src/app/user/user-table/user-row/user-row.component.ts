@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from '../../model/user.model';
-
+import { UserDetailService } from '../../user-datail/user-detail.service';
+import { UserService } from '../../../user/service/user.service';
 
 @Component({
     moduleId: module.id,
@@ -14,11 +15,29 @@ export class UserRowComponent implements OnInit {
     @Output()
     userSelectedEvent = new EventEmitter();
 
-    constructor() { }
+    @Output()
+    userDeletedEvent = new EventEmitter();    
+    
+    constructor(private userDetailService: UserDetailService, private userService: UserService) { }
 
     ngOnInit() { }
 
     userSelected(user: User) {
-        this.userSelectedEvent.emit({ user, selected: user.selected });
+        this.userSelectedEvent.emit({ user, selected: user.Selected });
+    }
+
+    showClicked(user: User) {
+        //alert(`user: ${user.FirstName}`);
+        this.userDetailService.show.next(user);
+    }
+
+    editClicked(user: User) {
+        this.userDetailService.edit.next(user);
+    }
+
+    deleteClicked(user: User) {
+        this.userService.deleteUsers([user.Id]).subscribe(() => {
+            this.userDeletedEvent.emit();
+        })
     }
 }
