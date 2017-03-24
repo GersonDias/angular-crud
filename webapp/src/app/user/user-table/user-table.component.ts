@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 
 import { UserService } from '../service/user.service';
 import { LoggerService } from '../../common/services/logger.service';
+import { UserDetailService } from '../user-datail/user-detail.service';
 
 import { User } from '../model/user.model';
 
 @Component({
     moduleId: module.id,
     selector: 'user-table',
-    templateUrl: 'user-table.component.html'
+    templateUrl: 'user-table.component.html',
+    styleUrls: ['user-table.component.css']
 })
 
 export class UserTableComponent implements OnInit {
@@ -16,7 +18,7 @@ export class UserTableComponent implements OnInit {
     selectedUsers: User[];
     numberSelectedUsers: number = 0;
 
-    constructor(private userService: UserService, private logger: LoggerService) {
+    constructor(private userService: UserService, private logger: LoggerService, private userDetailService: UserDetailService) {
         this.selectedUsers = [];
     }
 
@@ -36,13 +38,15 @@ export class UserTableComponent implements OnInit {
 
     deleteUsers() {
         if (this.selectedUsers) {
-            this.userService.deleteUsers(this.selectedUsers.map(x => x.Id)).subscribe(() => {
-                this.getUsers();
-                this.selectedUsers = [];
-                this.numberSelectedUsers = 0;
-            }, (errorMSg: string) => {
-                alert(errorMSg);
-            });
+            if (confirm(`You really want to delete those ${this.selectedUsers.length} users?`)) {
+                this.userService.deleteUsers(this.selectedUsers.map(x => x.Id)).subscribe(() => {
+                    this.getUsers();
+                    this.selectedUsers = [];
+                    this.numberSelectedUsers = 0;
+                }, (errorMSg: string) => {
+                    alert(errorMSg);
+                });
+            }
         }
     }
 
@@ -63,5 +67,9 @@ export class UserTableComponent implements OnInit {
 
     userDeletedEvent() {
         this.getUsers();
+    }
+
+    addUser() {
+        this.userDetailService.add.next(new User());
     }
 }

@@ -14,7 +14,7 @@ using System.Net.Http;
 
 namespace Server.Controllers
 {
-    [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
+    [EnableCors(origins: "http://localhost:3002", headers: "*", methods: "*")]
     public class UsersController : ApiController
     {
         private DbContext db = new DbContext();
@@ -38,7 +38,7 @@ namespace Server.Controllers
             return ResponseMessage(new System.Net.Http.HttpResponseMessage(HttpStatusCode.OK));
         }
 
-        public ResponseMessageResult Post([FromBody] User user)
+        public ResponseMessageResult Put([FromBody] User user)
         {
             try
             {
@@ -58,6 +58,15 @@ namespace Server.Controllers
             {
                 return ResponseMessage(new HttpResponseMessage(HttpStatusCode.InternalServerError) { Content = new StringContent(err.Message) });
             }
+        }
+
+        public ResponseMessageResult Post([FromBody] User user)
+        {
+            db.Users.Add(user);
+
+            db.SaveChanges();
+
+            return ResponseMessage(new HttpResponseMessage(HttpStatusCode.OK));
         }
     }
 

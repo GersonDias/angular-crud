@@ -7,5 +7,6 @@ import { User } from '../model/user.model';
 export class UserDetailService {
     show: Subject<User> = new Subject();
     edit: Subject<User> = new Subject();
+    add: Subject<User> = new Subject();
     constructor() { }
 }

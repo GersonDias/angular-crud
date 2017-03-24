@@ -35,8 +35,18 @@ export class UserService {
             });
     }
 
+    updateUser(user: User) {
+        this.logger.Log('Calling http put to update the user ' + user.Id);
+
+        return this.http.put(this.usersUrl, user)
+            .catch((error: any) => {
+                this.logger.Log(`An error occured: ${error}`);
+                return Observable.throw('Something bad happened');
+            });
+    }
+
     saveUser(user: User) {
-        this.logger.Log('Calling http post to save the user ' + user.Id);
+        this.logger.Log('calling http post to save the user ' + user.FirstName);
 
         return this.http.post(this.usersUrl, user)
             .catch((error: any) => {

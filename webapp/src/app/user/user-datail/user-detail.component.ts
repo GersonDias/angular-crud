@@ -36,17 +36,28 @@ export class UserDetailComponent {
             this.isEdit = true;
             this.initFormGroup(user);
             this.show = true;
+        });
+
+        userDetailService.add.subscribe((user: User) => {
+            this.isEdit = true;
+            this.initFormGroup(user);
+            this.show = true;
         })
     }
 
     private saveUser(): void {
         this.user.FirstName = this.userForm.controls['firstName'].value;
-        this.user.LastName = this.userForm.controls['lastName'].value;
-        this.user.Email = this.userForm.controls['email'].value;
-        this.user.Country = this.userForm.controls['country'].value;
+        this.user.LastName  = this.userForm.controls['lastName'].value;
+        this.user.Email     = this.userForm.controls['email'].value;
+        this.user.Country   = this.userForm.controls['country'].value;
         this.user.BirthDate = this.userForm.controls['birthDate'].value;
-        
-        this.userService.saveUser(this.user).subscribe(() => {
+
+        if (!this.user.Id) {
+            this.userService.saveUser(this.user).subscribe(() => {
+                this.userSavedEvent.emit();
+            });
+        }
+        this.userService.updateUser(this.user).subscribe(() => {
             this.userSavedEvent.emit();
         });
     }
@@ -59,7 +70,7 @@ export class UserDetailComponent {
             country:    new FormControl(user.Country),
             birthDate:  new FormControl(user.BirthDate)
         });
-        
+
         this.user = user;
     }
 }

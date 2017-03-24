@@ -16,8 +16,8 @@ export class UserRowComponent implements OnInit {
     userSelectedEvent = new EventEmitter();
 
     @Output()
-    userDeletedEvent = new EventEmitter();    
-    
+    userDeletedEvent = new EventEmitter();
+
     constructor(private userDetailService: UserDetailService, private userService: UserService) { }
 
     ngOnInit() { }
@@ -27,7 +27,6 @@ export class UserRowComponent implements OnInit {
     }
 
     showClicked(user: User) {
-        //alert(`user: ${user.FirstName}`);
         this.userDetailService.show.next(user);
     }
 
@@ -36,8 +35,10 @@ export class UserRowComponent implements OnInit {
     }
 
     deleteClicked(user: User) {
-        this.userService.deleteUsers([user.Id]).subscribe(() => {
-            this.userDeletedEvent.emit();
-        })
+        if (confirm(`You really want to delete the user ${user.FirstName} ${user.LastName}?`)) {
+            this.userService.deleteUsers([user.Id]).subscribe(() => {
+                this.userDeletedEvent.emit();
+            });
+        }
     }
 }
